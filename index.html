@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    {{ message }}
+</div>
+<div id="app-2">
+    <span v-bind:title="message">
+        hover you mouse
+    </span>
+</div>
+<div id="app-3">
+    <p v-if="sen">Now you see me</p>
+</div>
+<div id="app-4">
+    <ol>
+        <li v-for="todo in todos">
+            {{ todo.text }}
+        </li>
+    </ol>
+</div>
+<div id="app-5">
+    <p>{{ message }} </p>
+    <button v-on:click="reverseMessage">
+        reverseMessage
+    </button>
+</div>
+
+<ol>
+    <todo-item></todo-item>
+</ol>
+<div id="app-7">
+    <ol>
+        <todo-item v-for = "item in groceryList" v-bind:todo="item"></todo-item>
+    </ol>
+</div>
+<div id="example">
+    <p>orihnhhh message:"{{ message }}"</p>
+    <p>computed resever message:"{{ reversedMessage }}"</p>
+</div>
+<div id="demo">{{ fullName }}</div>
+<div id="watch-example">
+    <p>
+        Ask a yes/no question:
+        <input v-model="question">
+    </p>
+    <p>{{ answer }}</p>
+</div>
+<div v-bind:class="{ active:isActive }"></div>
+
+<h1 v-if="ok">yes</h1>
+<h1 v-else>no</h1>
+<ul id="example-1">
+    <li v-for="item in items">
+        {{ item.message }}
+    </li>
+</ul>
+<ul id="example-2">
+    <li v-for="(item,index) in items">
+        {{ parentMessage }}-{{ index }}-{{ item.message }}
+    </li>
+</ul>
+<a href="javascript:;" onclick="copy()"> dianwo</a>
+<input type="button" onclick="gethttp()" value="获取">
+<iframe id="text" name="text" src="http://api.shenyou.tv/apiv1/token" style="display:none;"></iframe>
+<script type="text/javascript">
+    var app = new Vue({
+        el:'#app',
+        data:{
+            message:'hello vue!'
+        }
+    })
+    var app2 =new Vue({
+        el:'#app-2',
+        data:{
+            message:'youyou'+new Date()
+        }
+    })
+    var app3 = new Vue({
+        el:'#app-3',
+        data:{
+            sen:true
+        }
+    })
+    var app4 = new Vue({
+        el:'#app-4',
+        data:{
+            todos: [
+                { text: 'learn javaScript'},
+                { text: 'kkkkkk'},
+                { text:'bulid something'}
+            ]
+        }
+    })
+    var app5 = new Vue({
+        el:'#app-5',
+        data: {
+            message:'hello'
+        },
+        methods:{
+            reverseMessage:function () {
+                this.message = this.message.split('').reverse().join('')
+            }
+        }
+    })
+    Vue.component('todo-item',{
+        template:'<li>this is a todo</li>'
+    })
+   Vue.component('todo-item',{
+       props:['todo'],
+       template:'<li>{{ todo.text }}</li>'
+   })
+    var app = new Vue({
+        el:'#app-7',
+        data: {
+            groceryList:[
+                { text:'verrr'},
+                { text:'mmmm'},
+                { text:'kkkk'}
+            ]
+        }
+    })
+    Vue.component('todo-item',{
+        props:['todo-item'],
+        template:'<li>{{ todo.text }}</li>'
+    })
+    var vm = new Vue({
+        data: {
+            a:1
+        },
+        created:function () {
+            console.log('a is: '+ this.a)
+        }
+    })
+    var vm = new  Vue({
+        el:"#example",
+        data: {
+            message:'hello'
+        },
+        computed:{
+            reversedMessage:function () {
+                return this.message.split('').reverse().join('')
+            }
+        }
+    })
+   /* var vm = new Vue({
+        el:'#demo',
+        data: {
+            firstName:'Foo',
+            lastName:'Bar',
+            fullName:'tttoo bar'
+        },
+        watch:{
+            firstName:function (val) {
+                this.fullName = val + ''+ this.lastName
+            },
+            lastName:function () {
+                this.fullName = this .firstName + ''+ val
+            }
+        }
+    })*/
+    var vm = new Vue({
+        el:'#demo',
+        data: {
+            firstName:'foo',
+            lastName:'bar'
+        },
+        computed:{
+            fullName:function () {
+                get:function () {
+                   return this.firstName+''+this.lastName
+               },
+                set:function (newValue) {
+                    var names = newValue.split('')
+                    this.firstName = names[0]
+                    this.lastName = names[names.length-1]
+
+                }
+            }
+        }
+
+    })
+
+</script>
+<script src="https://unpkg.com/axios@0.12.0/dist/axios.min.js"></script>
+<script src="https://unpkg.com/lodash@4.13.1/lodash.min.js"></script>
+<script>
+    var watchExampleVM = new Vue({
+        el: '#watch-example',
+        data: {
+            question: '',
+            answer: 'I cannot give you an answer until you ask a question!'
+        },
+        watch: {
+            // 如果 question 发生改变，这个函数就会运行
+            question: function (newQuestion) {
+                this.answer = 'Waiting for you to stop typing...'
+                this.getAnswer()
+            }
+        },
+        methods: {
+            // _.debounce 是一个通过 lodash 限制操作频率的函数。
+            // 在这个例子中，我们希望限制访问yesno.wtf/api的频率
+            // ajax请求直到用户输入完毕才会发出
+            // 学习更多关于 _.debounce function (and its cousin
+            // _.throttle), 参考: https://lodash.com/docs#debounce
+            getAnswer: _.debounce(
+                    function () {
+                        var vm = this
+                        if (this.question.indexOf('?') === -1) {
+                            vm.answer = 'Questions usually contain a question mark. ;-)'
+                            return
+                        }
+                        vm.answer = 'Thinking...'
+                        axios.get('https://yesno.wtf/api')
+                                .then(function (response) {
+                                    vm.answer = _.capitalize(response.data.answer)
+                                })
+                                .catch(function (error) {
+                                    vm.answer = 'Error! Could not reach the API. ' + error
+                                })
+                    },
+                    // 这是我们为用户停止输入等待的毫秒数
+                    500
+            )
+        }
+    })
+</script>
+<script>
+var example1 = new Vue({
+    el:'#example-1',
+    data: {
+        items:[
+            {message:'foo'},
+            {message:'bar'}
+        ]
+    }
+})
+function gethttp(){
+    var context=document.getElementById("text").innerHTML;
+//alert(context);
+}
+
+function copy(target){
+    document.getElementById("s").innerHTML=window.location.split('http://api.shenyou.tv/apiv1/token')[1];
+
+}
+
+</script>
+</body>
+</html>

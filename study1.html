@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数组的12个常用方法</title>
+</head>
+<body>
+<script>
+    //obiect
+/*  /!*  var obj={};
+    var arry=[];//数组；
+    var reg=/^（?:^）/;//正则表达式
+    var date=new Date();//获取当前时间*!/
+    var ary=[1,2,3,4];//字面量
+   /!* var ary=new Array();//实例*!/
+    console.dir(ary);//看数组的详细信息；包含数组常用的方法；
+    var colors =["red","green","blue"];
+    alert(colors.join(","));
+    //注意当数组里面的值是null或者undefinde的时候返回的结果为空的字符串表示
+    //数组的删除和添加
+    var colors1 =["red","green","blue"];
+    colors1.push("white","test");
+    alert(colors1.join("|"));
+    var item = colors1.unshift("first");
+    alert(colors1.join("|"));
+    colors1.reverse();
+    alert(colors1);
+    var values=[0,1,5,10,7];
+    values.sort(compare);
+    alert(values);
+    document.write(values);*/
+   /* var colors2=["color","red"];
+    var  colors3 = colors2.concat(["ccc","bbb"],'333',['vvccxx',['11','22']]);
+    alert(colors3);
+    var colors4=colors3.slice(1,3);
+    alert(colors4);
+    var ary=[1,2,3,4,5,6];
+
+    //一个数组里有索引和数组的长度组成，索引从0开始+1.长度length
+    //如果我们写的索引超过了总长度，返回undefined
+    for(var i = 0;i<ary.length;i++){
+        console.log(ary[0]);
+    }*/
+    //学习方法；
+    //1方法是做什么用的，
+    //2传递参数是什么
+    //3返回值是什么
+   // 原来的数组是否发生改变
+var mry=[10,30,20,40,55,20];
+    /*第一组：关于数组的增加删除修改*/
+   /* 1.push像数组末尾添加新的内容；
+   * 2。unshift像数组的开头增加新的内容，返回的也是增加数组的长度，原来的数组也改变了
+   *3.splice(n,0,x)向数字中间木个位置添加新内容n指索引值0指没有删除，x是添加的数组
+   * splice(n,m)删除数组中指定的木屑项9，从索引n开始（包含n）,删除m个元素，把删除的内容当作一个新的数组返回，原有的数组改变
+   * splice(n,m,x)把原有数组中的某些项进行替换（先删除，然后用x替换）从索引n开始删除m个元素，用x替换原来的，把删除的内容当作一个新的数组返回
+   * 原有数组改变
+    *
+    * splice(0,0,3)
+     * */
+
+   //mry.push(11,16);
+
+    var res=mry.splice(2,3);
+
+    console.log(mry);
+
+
+
+
+
+
+</script>
+
+</body>
+</html>
